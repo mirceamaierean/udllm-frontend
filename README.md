@@ -1,57 +1,65 @@
-# SimQuery
+# Newsito Informiro
 
-**SimQuery** is a Next.js-based AI application for validating data about Romanian political history. It cross-references and verifies data points like historical events, political figures, and key dates, ensuring accuracy and reliability for research and educational purposes.
-
-![SimQuery Snapshot](snapshot_14.11.2024.png)
+**Newsito Informiro** is an AI-powered, satirical news chat application built with Next.js. Chat with an AI about the news, toggle Satire Mode for a wild ride, and enjoy a playful, interactive experience!
 
 ---
 
 ## Project Overview
 
-SimQuery provides tools to validate data related to Romania’s political history, using AI to analyze and cross-reference input data with known historical records. Built with Next.js, SimQuery is optimized for fast, seamless interactions and accurate validation results.
+Newsito Informiro lets you chat with an AI about current events, news, and more. With Satire Mode, you can switch between serious and satirical answers at any time. The app features a modern chat interface, emoji-rich backgrounds, and interactive feedback on AI responses.
 
 ---
 
 ## Features
 
-- **Historical Event Validation**: Verifies dates, events, and political figures in Romanian history.
-- **Cross-Referencing**: Cross-references data points with a verified historical database.
-- **Easy-to-Use Interface**: Built with Next.js for a smooth, responsive user experience.
+- **Satire Mode 🃏**: Toggle to receive satirical, humorous news answers from the AI.
+- **AI Chat Interface**: Ask questions and get instant responses.
+- **Like/Dislike AI Answers**: Give feedback on AI messages with thumbs up/down.
+- **Animated, Funky Backgrounds**: Enjoy playful gradients and floating emojis in Satire Mode.
+- **User Settings & Logout**: Manage your account and securely log out.
+- **Chat History**: Browse and manage your previous conversations.
 
 ---
 
 ## Installation
 
-You can either use the deployed version of **SimQuery** or run it locally on your machine.
+You can use the deployed version or run Newsito Informiro locally.
 
-The deployed version is currently available [here](https://turbo-bassoon-lime.vercel.app.vercel.app/).
-
-If you want to clone and run the project locally, follow these steps:
-
-1. Clone the repository: https://github.com/mirceamaierean/turbo-bassoon
-
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mirceamaierean/udllm-frontend
+   cd udllm-frontend
+   ```
 2. Install dependencies:
-
    ```bash
    npm install
+   # or
+   pnpm install
    ```
-
 3. Run the development server:
-
    ```bash
    npm run dev
+   # or
+   pnpm dev
    ```
-
-   Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
 ## Usage
 
-To start using **SimQuery**, upload or enter data about Romanian political history for validation. Results will show validated data points and any discrepancies found. Any query you want will be processed and validated in real-time.
-
-As an answer to your query, you will receive a list of validated data points, along with any discrepancies found. You can then use this information for research, educational purposes, or any other relevant context.
+- **Start a Chat**: Click "Start Chatting" on the home page or "New chat" in the sidebar.
+- **Toggle Satire Mode**: Use the switch above the input box to turn Satire Mode on or off.
+- **Like/Dislike**: Click 👍 or 👎 under any AI message to give feedback.
+- **User Menu**: Click your avatar/settings icon to access user settings or log out.
+- **Enjoy the Experience!**
 
 ---
 
-Enjoy using **SimQuery** to validate your historical data accurately and efficiently!
+## About Satire Mode
+
+Satire Mode transforms the AI's answers into playful, humorous, or satirical takes on the news. When enabled, the background becomes animated and emojis float across the screen for a fun, immersive experience.
+
+---
+
+Enjoy using **Newsito Informiro** for both serious and satirical news chats!
