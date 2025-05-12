@@ -1,3 +1,5 @@
+import { Message } from "@/generated/prisma";
+
 export async function addMessage(
   content: string,
   conversationId: string,
@@ -14,7 +16,8 @@ export async function addMessage(
   if (!response.ok) {
     throw new Error("Failed to add message");
   }
-  return response.json();
+  const message = (await response.json()) as Message;
+  return message;
 }
 
 export async function updateLikeDislike(promptId: string, liked: boolean) {
@@ -26,4 +29,18 @@ export async function updateLikeDislike(promptId: string, liked: boolean) {
     throw new Error("Failed to update like/dislike");
   }
   return response.json();
+}
+
+export async function rewardMessages(
+  prompt: string,
+  response: string,
+  reward: number,
+) {
+  const resp = await fetch("/api/message/reward", {
+    method: "POST",
+    body: JSON.stringify({ prompt, response, reward }),
+  });
+  if (!resp.ok) {
+    throw new Error("Failed to reward");
+  }
 }

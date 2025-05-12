@@ -19,28 +19,32 @@ export async function POST(req: NextRequest) {
   //   ],
   // };
   // return new NextResponse(JSON.stringify(response, null, 2));
-  const { userMessage, context } = await req.json();
+  const { userMessage, context, mode } = await req.json();
 
   try {
-    const promptResponse = await fetch(process.env.BACKEND_URL + "/prompt", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt: userMessage,
-        context,
-      }),
-    });
+    const promptResponse = await fetch(
+      process.env.BACKEND_URL + "/llm/prompt",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: userMessage,
+          context,
+          mode,
+        }),
+      }
+    );
 
     const data = await promptResponse.json();
 
-    if (data.error)
+    if (promptResponse.status !== 200)
       return NextResponse.json(
         {
           text: data.error,
         },
-        { status: data.status_code },
+        { status: data.status_code }
       );
 
     const response = {
@@ -67,7 +71,7 @@ export async function POST(req: NextRequest) {
       {
         text: "Failed to get response from AI.",
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

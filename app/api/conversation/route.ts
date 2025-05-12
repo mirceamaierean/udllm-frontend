@@ -56,10 +56,5 @@ export async function DELETE(request: NextRequest) {
       { status: 400 },
     );
   }
-  const conversation = await prisma.conversation.delete({
-    where: {
-      id: conversationId,
-    },
-  });
   return NextResponse.json({ message: "Conversation deleted" });
 }

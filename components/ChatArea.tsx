@@ -44,12 +44,14 @@ export function ChatArea({
   generatingResponse,
   messagesWithPromptId,
   onSelectCandidate,
+  onLikeClick,
 }: {
   messages: Message[];
   chatContainerRef: React.RefObject<HTMLDivElement>;
   generatingResponse?: boolean;
   messagesWithPromptId?: MessageWithPromptId[];
   onSelectCandidate?: (msg: MessageWithPromptId) => void;
+  onLikeClick: (aiMessage: Message, score: number) => void;
 }) {
   return (
     <div
@@ -73,7 +75,11 @@ export function ChatArea({
       ) : (
         <div className="w-full max-w-2xl space-y-4 pt-8">
           {messages.map((message) => (
-            <ChatMessage key={message.id} message={message} />
+            <ChatMessage
+              key={message.id}
+              message={message}
+              onLikeClick={onLikeClick}
+            />
           ))}
           {messagesWithPromptId &&
             messagesWithPromptId.length > 1 &&

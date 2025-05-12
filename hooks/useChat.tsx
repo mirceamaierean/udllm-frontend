@@ -10,20 +10,39 @@ export function useChat() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const buildContext = (userMessage: string, messages: Message[]) => {
-    if (messages.length === 50) {
+    while (messages.length > 50) {
       // remove the oldest message
       messages.shift();
     }
 
     const context = messages
-      .map((message) => `${message.senderId}: ${message.content}`)
+      .map(
+        (message) =>
+          `${message.senderId === "ai" ? "assistant" : "user"} : ${
+            message.content
+          }`,
+      )
       .join("\n");
     return context;
+  };
+
+  const findPreviousMessageSendByUser = (messageId: string) => {
+    // find index of messageId
+    const index = messages.findIndex((message) => message.id === messageId);
+    // find the message sent by user before the current message
+    if (index === 0) return null;
+    for (let i = index - 1; i >= 0; i--) {
+      if (messages[i].senderId !== "ai") {
+        return messages[i];
+      }
+    }
+    return null;
   };
 
   const fetchAIResponse = async (
     userMessage: string,
     conversationId: string,
+    mode: "satirical" | "normal",
   ) => {
     const context = buildContext(userMessage, messages);
     try {
@@ -35,16 +54,18 @@ export function useChat() {
         body: JSON.stringify({
           userMessage,
           context,
+          mode,
         }),
       });
       const resp = await response.json();
 
       if (resp.messages.length == 1) {
-        const message = await addMessage(
+        const message = (await addMessage(
           resp.messages[0].content,
           conversationId,
           "ai",
-        );
+        )) as Message;
+
         return message;
       }
 
@@ -64,5 +85,8 @@ export function useChat() {
     chatContainerRef,
     fetchAIResponse,
     includeMessage,
+    messages,
+    setMessages,
+    findPreviousMessageSendByUser,
   };
 }
