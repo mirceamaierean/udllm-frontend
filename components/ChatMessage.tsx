@@ -1,20 +1,21 @@
-import { Message } from "@/lib/types";
+import { Message } from "@/generated/prisma";
 
 export function ChatMessage({ message }: { message: Message }) {
+  // console.log(message);
   return (
     <div
       className={`flex ${
-        message.sender === "user" ? "justify-end" : "justify-start"
+        message.senderId === "ai" ? "justify-start" : "justify-end"
       }`}
     >
       <div
         className={`max-w-3/4 p-3 rounded-lg ${
-          message.sender === "user"
-            ? "bg-[#498C8A] text-white"
-            : "bg-white border border-[#947EB0]"
+          message.senderId === "ai"
+            ? "bg-white border border-[#947EB0]"
+            : "bg-[#498C8A] text-white"
         }`}
       >
-        <p>{message.text}</p>
+        <p>{message.content}</p>
       </div>
     </div>
   );
