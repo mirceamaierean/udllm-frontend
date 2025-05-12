@@ -1,9 +1,11 @@
 export type Sender = "user" | "ai";
-export interface Message {
-  id: number;
-  text: string;
-  sender?: Sender;
-}
+
+export type MessageWithPromptId = {
+  content: string;
+  promptId: string;
+  articles: string[];
+  sender: Sender;
+};
 
 export interface FeaturedQuestion {
   id: number;

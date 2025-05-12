@@ -1,21 +1,31 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Message, Sender } from "@/lib/types";
+import { useState, useRef } from "react";
+import { Message } from "@/generated/prisma";
+import { addMessage } from "@/services/MessageService";
 
 export function useChat() {
-  const [conversation, setConversation] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [showConversation, setShowConversation] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+  const buildContext = (userMessage: string, messages: Message[]) => {
+    if (messages.length === 50) {
+      // remove the oldest message
+      messages.shift();
     }
-  }, [conversation]);
 
-  const fetchAIResponse = async (userMessage: string) => {
+    const context = messages
+      .map((message) => `${message.senderId}: ${message.content}`)
+      .join("\n");
+    return context;
+  };
+
+  const fetchAIResponse = async (
+    userMessage: string,
+    conversationId: string,
+  ) => {
+    const context = buildContext(userMessage, messages);
     try {
       const response = await fetch("/api/model", {
         method: "POST",
@@ -24,37 +34,35 @@ export function useChat() {
         },
         body: JSON.stringify({
           userMessage,
-          conversation,
+          context,
         }),
       });
+      const resp = await response.json();
 
-      const data = await response.json();
-      const aiResponse: Message = {
-        id: Date.now(),
-        text: data.response,
-        sender: "ai" as Sender,
-      };
+      if (resp.messages.length == 1) {
+        const message = await addMessage(
+          resp.messages[0].content,
+          conversationId,
+          "ai",
+        );
+        return message;
+      }
 
-      setConversation((prev) => [...prev, aiResponse]);
+      return resp;
     } catch (error) {
       console.error("Error fetching AI response:", error);
-      setConversation((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          text: "Failed to get response from AI.",
-          sender: "ai" as Sender,
-        },
-      ]);
     }
   };
 
+  const includeMessage = (message: Message) => {
+    setMessages((prev) => [...prev, message]);
+  };
+
   return {
-    conversation,
-    setConversation,
     showConversation,
     setShowConversation,
     chatContainerRef,
     fetchAIResponse,
+    includeMessage,
   };
 }
