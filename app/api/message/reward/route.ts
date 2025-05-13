@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   if (resp.status !== 200) {
     return NextResponse.json(
       { message: `Failed to reward: ${resp.statusText}` },
-      { status: resp.status }
+      { status: resp.status },
     );
   }
 

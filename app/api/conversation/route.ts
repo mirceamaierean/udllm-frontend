@@ -49,12 +49,24 @@ export async function DELETE(request: NextRequest) {
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
   const conversationId = request.nextUrl.searchParams.get("conversationId");
+  console.log(conversationId);
+
   if (!conversationId) {
     return NextResponse.json(
       { error: "Conversation ID is required" },
       { status: 400 },
     );
   }
+
+  const response = await prisma.conversation.delete({
+    where: {
+      id: conversationId,
+    },
+  });
+
+  console.log(response);
+
   return NextResponse.json({ message: "Conversation deleted" });
 }

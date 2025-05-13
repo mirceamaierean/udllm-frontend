@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
           context,
           mode,
         }),
-      }
+      },
     );
 
     const data = await promptResponse.json();
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         {
           text: data.error,
         },
-        { status: data.status_code }
+        { status: data.status_code },
       );
 
     const response = {
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       {
         text: "Failed to get response from AI.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

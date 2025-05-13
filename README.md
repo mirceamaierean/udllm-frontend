@@ -4,6 +4,13 @@
 
 ---
 
+## Application Preview
+
+![Application Screenshot](./info.png)
+![Chat](./chat.png)
+
+---
+
 ## Project Overview
 
 Newsito Informiro lets you chat with an AI about current events, news, and more. With Satire Mode, you can switch between serious and satirical answers at any time. The app features a modern chat interface, emoji-rich backgrounds, and interactive feedback on AI responses.
